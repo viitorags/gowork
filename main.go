@@ -1,9 +1,18 @@
 package main
 
 import (
-    "github.com/viitorags/gowork/router"
+	"fmt"
+
+	"github.com/viitorags/gowork/config"
+	"github.com/viitorags/gowork/router"
 )
 
 func main() {
-    router.Initialize()
+
+	err := config.Init()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	router.Initialize()
 }
