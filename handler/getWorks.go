@@ -4,10 +4,24 @@ import (
     "net/http"
 
     "github.com/gin-gonic/gin"
+    "github.com/viitorags/gowork/schemas"
 )
 
-func GetWorksV1(ctx *gin.Context) {
-    ctx.JSON(http.StatusOK, gin.H{
-        "msg": "GET WORKS",
-    })
+// @Summary        Get works
+// @Description    List all job
+// @Tags            Works
+// @Accept            json
+// @Produce        json
+// @Success        200    {object}    GetWorksResponse
+// @Failure        500    {object}    ErrorResponse
+// @Router            /works [get]
+func GetWorksHandler(ctx *gin.Context) {
+    works := []schemas.Works{}
+
+    if err := db.Find(&works).Error; err != nil {
+        sendError(ctx, http.StatusInternalServerError, "error getting works")
+        return
+    }
+
+    sendSucess(ctx, "list works", works)
 }
