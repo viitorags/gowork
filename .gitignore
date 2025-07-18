@@ -1,0 +1,15 @@
+# Binaries
+
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Environment Variables
+
+*.env
+
+# Docker
+
+Dockerfile
+docker-compose.yml

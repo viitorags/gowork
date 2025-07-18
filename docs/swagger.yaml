@@ -1,0 +1,250 @@
+basePath: /api/v1
+definitions:
+  handler.CreateWorkRequest:
+    properties:
+      company:
+        type: string
+      link:
+        type: string
+      location:
+        type: string
+      remote:
+        type: boolean
+      role:
+        type: string
+      salary:
+        type: integer
+    type: object
+  handler.CreateWorkResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schemas.WorksResponse'
+      message:
+        type: string
+    type: object
+  handler.DeleteWorkResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schemas.WorksResponse'
+      message:
+        type: string
+    type: object
+  handler.ErrorResponse:
+    properties:
+      errorCode:
+        type: string
+      message:
+        type: string
+    type: object
+  handler.GetWorksResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/schemas.WorksResponse'
+        type: array
+      message:
+        type: string
+    type: object
+  handler.ShowWorkResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schemas.WorksResponse'
+      message:
+        type: string
+    type: object
+  handler.UpdateWorkRequest:
+    properties:
+      company:
+        type: string
+      link:
+        type: string
+      location:
+        type: string
+      remote:
+        type: boolean
+      role:
+        type: string
+      salary:
+        type: integer
+    type: object
+  handler.UpdateWorkResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schemas.WorksResponse'
+      message:
+        type: string
+    type: object
+  schemas.WorksResponse:
+    properties:
+      company:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      id:
+        type: integer
+      link:
+        type: string
+      location:
+        type: string
+      remote:
+        type: boolean
+      role:
+        type: string
+      salary:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API para gerenciamento de vagas de trabalho
+  title: GoWork API
+  version: "1.0"
+paths:
+  /works:
+    get:
+      consumes:
+      - application/json
+      description: List all job
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.GetWorksResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Get works
+      tags:
+      - Works
+    post:
+      consumes:
+      - application/json
+      description: Create a new job
+      parameters:
+      - description: Request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handler.CreateWorkRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.CreateWorkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Create work
+      tags:
+      - Works
+  /works/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a job
+      parameters:
+      - description: Work identification
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.DeleteWorkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Delete work
+      tags:
+      - Works
+    get:
+      consumes:
+      - application/json
+      description: Show a job
+      parameters:
+      - description: Work identification
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ShowWorkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Show work
+      tags:
+      - Works
+    put:
+      consumes:
+      - application/json
+      description: Update a job
+      parameters:
+      - description: Work identification
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Work data to Update
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UpdateWorkRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.UpdateWorkResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Update work
+      tags:
+      - Works
+swagger: "2.0"
