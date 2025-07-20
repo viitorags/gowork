@@ -97,7 +97,7 @@ definitions:
       updatedAt:
         type: string
     type: object
-host: localhost:8080
+host: squid-app-ti4wd.ondigitalocean.app
 info:
   contact: {}
   description: API para gerenciamento de vagas de trabalho
