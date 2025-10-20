@@ -15,7 +15,6 @@ func InitializeRoutes(router *gin.Engine) {
     basePath := "/api/v1"
     docs.SwaggerInfo.BasePath = basePath
 
-    // Redireciona a rota raiz para o Swagger UI
     router.GET("/", func(c *gin.Context) {
         c.Redirect(http.StatusMovedPermanently, "/swagger/index.html")
     })
