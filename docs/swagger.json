@@ -6,7 +6,7 @@
         "contact": {},
         "version": "1.0"
     },
-    "host": "squid-app-ti4wd.ondigitalocean.app",
+    "host": "gowork-va7k.onrender.com",
     "basePath": "/api/v1",
     "paths": {
         "/works": {

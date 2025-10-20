@@ -97,7 +97,7 @@ definitions:
       updatedAt:
         type: string
     type: object
-host: squid-app-ti4wd.ondigitalocean.app
+host: gowork-va7k.onrender.com
 info:
   contact: {}
   description: API para gerenciamento de vagas de trabalho
