@@ -1,0 +1,33 @@
+run:
+  timeout: 2m        
+  tests: true       
+  skip-dirs:
+    - vendor 
+
+linters:
+  enable:
+    - govet  
+    - staticcheck
+    - gofmt 
+    - gosimple  
+    - errcheck  
+    - unused    
+    - revive    
+
+linters-settings:
+  gofmt:
+    simplify: true
+  revive:
+    severity: warning
+    rules:
+      - name: indent-error-flow
+      - name: exported
+        severity: info
+        arguments: ["checkPrivateReceivers"]
+
+issues:
+  exclude-use-default: false
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  exclude:
+    - "Error return value of .(Close|Write|Flush). is not checked"

@@ -18,7 +18,6 @@ import (
 // @Failure        500        {object}    ErrorResponse
 // @Router            /works [post]
 func CreateWorkHandler(ctx *gin.Context) {
-
     request := CreateWorkRequest{}
 
     ctx.BindJSON(&request)
