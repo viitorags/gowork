@@ -1,7 +1,7 @@
 // @title            GoWork API
 // @version        1.0
 // @description    API para gerenciamento de vagas de trabalho
-// @host            squid-app-ti4wd.ondigitalocean.app
+// @host            gowork-va7k.onrender.com
 // @BasePath        /api/v1
 package main
 
