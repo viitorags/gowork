@@ -1,10 +1,10 @@
 package handler
 
 import (
-    "net/http"
+	"net/http"
 
-    "github.com/gin-gonic/gin"
-    "github.com/viitorags/gowork/schemas"
+	"github.com/gin-gonic/gin"
+	"github.com/viitorags/gowork/schemas"
 )
 
 // @Summary        Update work
@@ -20,58 +20,58 @@ import (
 // @Failure        500        {object}    ErrorResponse
 // @Router            /works/{id} [put]
 func UpdateWorkHandler(ctx *gin.Context) {
-    request := UpdateWorkRequest{}
+	request := UpdateWorkRequest{}
 
-    ctx.BindJSON(&request)
+	ctx.BindJSON(&request)
 
-    if err := request.Validate(); err != nil {
-        logger.Error("validation error: ", err.Error())
-        sendError(ctx, http.StatusBadRequest, err.Error())
-        return
-    }
+	if err := request.Validate(); err != nil {
+		logger.Error("validation error: ", err.Error())
+		sendError(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
 
-    id := ctx.Param("id")
-    if id == "" {
-        sendError(ctx, http.StatusBadRequest, errParamRequired("id", "queryParameter").Error())
-        return
-    }
+	id := ctx.Param("id")
+	if id == "" {
+		sendError(ctx, http.StatusBadRequest, errParamRequired("id", "queryParameter").Error())
+		return
+	}
 
-    work := schemas.Works{}
+	work := schemas.Works{}
 
-    if err := db.First(&work, id).Error; err != nil {
-        sendError(ctx, http.StatusNotFound, "work not found")
-        return
-    }
+	if err := db.First(&work, "id = ?", id).Error; err != nil {
+		sendError(ctx, http.StatusNotFound, "work not found")
+		return
+	}
 
-    if request.Role != "" {
-        work.Role = request.Role
-    }
+	if request.Role != "" {
+		work.Role = request.Role
+	}
 
-    if request.Company != "" {
-        work.Company = request.Company
-    }
+	if request.Company != "" {
+		work.Company = request.Company
+	}
 
-    if request.Location != "" {
-        work.Location = request.Location
-    }
+	if request.Location != "" {
+		work.Location = request.Location
+	}
 
-    if request.Remote != nil {
-        work.Remote = *request.Remote
-    }
+	if request.Remote != nil {
+		work.Remote = *request.Remote
+	}
 
-    if request.Link != "" {
-        work.Link = request.Link
-    }
+	if request.Link != "" {
+		work.Link = request.Link
+	}
 
-    if request.Salary > 0 {
-        work.Salary = request.Salary
-    }
+	if request.Salary > 0 {
+		work.Salary = request.Salary
+	}
 
-    if err := db.Save(&work).Error; err != nil {
-        logger.Error("error updating work: ", err.Error())
-        sendError(ctx, http.StatusInternalServerError, "error updating work")
-        return
-    }
+	if err := db.Save(&work).Error; err != nil {
+		logger.Error("error updating work: ", err.Error())
+		sendError(ctx, http.StatusInternalServerError, "error updating work")
+		return
+	}
 
-    sendSucess(ctx, "work update", work)
+	sendSucess(ctx, "work update", work)
 }

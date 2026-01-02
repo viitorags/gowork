@@ -1,11 +1,11 @@
 package handler
 
 import (
-    "fmt"
-    "net/http"
+	"fmt"
+	"net/http"
 
-    "github.com/gin-gonic/gin"
-    "github.com/viitorags/gowork/schemas"
+	"github.com/gin-gonic/gin"
+	"github.com/viitorags/gowork/schemas"
 )
 
 // @Summary        Delete work
@@ -19,23 +19,23 @@ import (
 // @Failure        404    {object}    ErrorResponse
 // @Router            /works/{id} [delete]
 func DeleteWorkHandler(ctx *gin.Context) {
-    id := ctx.Param("id")
-    if id == "" {
-        sendError(ctx, http.StatusBadRequest, errParamRequired("id", "queryParameter").Error())
-        return
-    }
+	id := ctx.Param("id")
+	if id == "" {
+		sendError(ctx, http.StatusBadRequest, errParamRequired("id", "queryParameter").Error())
+		return
+	}
 
-    work := schemas.Works{}
+	work := schemas.Works{}
 
-    if err := db.First(&work, id).Error; err != nil {
-        sendError(ctx, http.StatusNotFound, fmt.Sprintf("work: %s not found", id))
-        return
-    }
+	if err := db.First(&work, "id = ?", id).Error; err != nil {
+		sendError(ctx, http.StatusNotFound, fmt.Sprintf("work: %s not found", id))
+		return
+	}
 
-    if err := db.Delete(&work).Error; err != nil {
-        sendError(ctx, http.StatusInternalServerError, fmt.Sprintf("error deleting opening with id: %s", id))
-        return
-    }
+	if err := db.Delete(&work).Error; err != nil {
+		sendError(ctx, http.StatusInternalServerError, fmt.Sprintf("error deleting opening with id: %s", id))
+		return
+	}
 
-    sendSucess(ctx, "delete work", work)
+	sendSucess(ctx, "delete work", work)
 }
