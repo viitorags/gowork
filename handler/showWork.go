@@ -27,7 +27,8 @@ func ShowWorkHandler(ctx *gin.Context) {
 
 	work := schemas.Works{}
 
-	if err := db.First(&work, "id = ?", id).Error; err != nil {
+	err := db.First(&work, "id = ?", id).Error
+	if err != nil {
 		sendError(ctx, http.StatusNotFound, fmt.Sprintf("work: %s not found", id))
 		return
 	}
