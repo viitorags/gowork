@@ -1,10 +1,10 @@
 package handler
 
 import (
-    "net/http"
+	"net/http"
 
-    "github.com/gin-gonic/gin"
-    "github.com/viitorags/gowork/schemas"
+	"github.com/gin-gonic/gin"
+	"github.com/viitorags/gowork/schemas"
 )
 
 // @Summary        Create work
@@ -18,33 +18,33 @@ import (
 // @Failure        500        {object}    ErrorResponse
 // @Router            /works [post]
 func CreateWorkHandler(ctx *gin.Context) {
-    request := CreateWorkRequest{}
+	request := CreateWorkRequest{}
 
-    ctx.BindJSON(&request)
+	ctx.BindJSON(&request)
 
-    err := request.Validate()
-    if err != nil {
-        logger.Error("validation error: ", err)
-        sendError(ctx, http.StatusBadRequest, err.Error())
-        return
-    }
+	err := request.Validate()
+	if err != nil {
+		logger.Error("validation error: ", err)
+		sendError(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
 
-    work := schemas.Works{
-        Role:     request.Role,
-        Company:  request.Company,
-        Location: request.Location,
-        Remote:   *request.Remote,
-        Link:     request.Link,
-        Salary:   request.Salary,
-    }
+	work := schemas.Works{
+		Role:     request.Role,
+		Company:  request.Company,
+		Location: request.Location,
+		Remote:   *request.Remote,
+		Link:     request.Link,
+		Salary:   request.Salary,
+	}
 
-    err = db.Create(&work).Error
-    if err != nil {
-        logger.Error("error creating opening: ", err.Error())
-        sendError(ctx, http.StatusInternalServerError, err.Error())
-        return
-    }
+	err = db.Create(&work).Error
+	if err != nil {
+		logger.Error("error creating opening: ", err.Error())
+		sendError(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
 
-    sendSucess(ctx, "create work", work)
+	sendSucess(ctx, "create work", work)
 
 }

@@ -1,10 +1,10 @@
 package handler
 
 import (
-    "net/http"
+	"net/http"
 
-    "github.com/gin-gonic/gin"
-    "github.com/viitorags/gowork/schemas"
+	"github.com/gin-gonic/gin"
+	"github.com/viitorags/gowork/schemas"
 )
 
 // @Summary        Get works
@@ -16,12 +16,12 @@ import (
 // @Failure        500    {object}    ErrorResponse
 // @Router            /works [get]
 func GetWorksHandler(ctx *gin.Context) {
-    works := []schemas.Works{}
+	works := []schemas.Works{}
 
-    if err := db.Find(&works).Error; err != nil {
-        sendError(ctx, http.StatusInternalServerError, "error getting works")
-        return
-    }
+	if err := db.Find(&works).Error; err != nil {
+		sendError(ctx, http.StatusInternalServerError, "error getting works")
+		return
+	}
 
-    sendSucess(ctx, "list works", works)
+	sendSucess(ctx, "list works", works)
 }
