@@ -9,6 +9,8 @@ import (
 	"os"
 
 	"github.com/viitorags/gowork/config"
+
+	// This blank import is important for using Swagger in API documentation.
 	_ "github.com/viitorags/gowork/docs"
 	"github.com/viitorags/gowork/router"
 )
