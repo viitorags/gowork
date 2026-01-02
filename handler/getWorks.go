@@ -18,7 +18,8 @@ import (
 func GetWorksHandler(ctx *gin.Context) {
 	works := []schemas.Works{}
 
-	if err := db.Find(&works).Error; err != nil {
+	err := db.Find(&works).Error
+	if err != nil {
 		sendError(ctx, http.StatusInternalServerError, "error getting works")
 		return
 	}

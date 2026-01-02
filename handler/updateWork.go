@@ -38,7 +38,8 @@ func UpdateWorkHandler(ctx *gin.Context) {
 
 	work := schemas.Works{}
 
-	if err := db.First(&work, "id = ?", id).Error; err != nil {
+	err := db.First(&work, "id = ?", id).Error
+	if err != nil {
 		sendError(ctx, http.StatusNotFound, "work not found")
 		return
 	}

@@ -27,12 +27,13 @@ func DeleteWorkHandler(ctx *gin.Context) {
 
 	work := schemas.Works{}
 
-	if err := db.First(&work, "id = ?", id).Error; err != nil {
+	err := db.First(&work, "id = ?", id).Error
+	if err != nil {
 		sendError(ctx, http.StatusNotFound, fmt.Sprintf("work: %s not found", id))
 		return
 	}
 
-	if err := db.Delete(&work).Error; err != nil {
+	err := db.Delete(&work).Error; err != nil {
 		sendError(ctx, http.StatusInternalServerError, fmt.Sprintf("error deleting opening with id: %s", id))
 		return
 	}
