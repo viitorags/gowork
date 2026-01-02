@@ -19,13 +19,16 @@ func InitializeRoutes(router *gin.Engine) {
 		c.Redirect(http.StatusMovedPermanently, "/swagger/index.html")
 	})
 
+	const worksPath = "/works"
+	const workByIDPath = "/works/:id"
+
 	v1 := router.Group(basePath)
 	{
-		v1.GET("/works", handler.GetWorksHandler)
-		v1.GET("/works/:id", handler.ShowWorkHandler)
-		v1.POST("/works", handler.CreateWorkHandler)
-		v1.DELETE("/works/:id", handler.DeleteWorkHandler)
-		v1.PUT("/works/:id", handler.UpdateWorkHandler)
+		v1.GET(worksPath, handler.GetWorksHandler)
+		v1.GET(workByIDPath, handler.ShowWorkHandler)
+		v1.POST(worksPath, handler.CreateWorkHandler)
+		v1.DELETE(workByIDPath, handler.DeleteWorkHandler)
+		v1.PUT(workByIDPath, handler.UpdateWorkHandler)
 	}
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
